@@ -1,17 +1,15 @@
-# Discord Chat Replica
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=NailaBot/Discord-chat-replica)](https://dependabot.com)
+# DiscordTickets Portal
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=eartharoid/DiscordTickets-Portal)](https://dependabot.com)
 
-A small microservice to generate a Discord-like chat section.
+Forked from [NailaBot/Discord-chat-replica](https://github.com/NailaBot/Discord-chat-replica) because the UI is amazing.
 
-## installation
-~~you dont~~
+Currently exactly the same, but it will have a completely new web server to work with [DiscordTickets](https://github.com/eartharoid/DiscordTickets).
 
- - https://github.com/evanw/esbuild#install
- - git clone
- - pnpm i
- - pnpm run build
- - create config.json
- - pm2 start pm2.json
+<details>
+<summary>Details</summary>
+<br>
+The bot will post json data to this when a ticket is closed,
+ get /:user will show all of a user's archived tickets,
+ get /:user/:channel will render the archive
+</details>
 
-## request format
-see example.json
