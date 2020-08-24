@@ -19,7 +19,7 @@ class MessageAttachment extends HTMLElement {
   async onClick () {
     this.renderModal('LOADING')
     const file = this.querySelector('a').href
-    const res = await fetch(file.replace('https://cdn.discordapp.com', window.GLOBAL_ENV.HOSTNAME))
+    const res = await fetch(file) //.replace('https://cdn.discordapp.com', window.GLOBAL_ENV.HOSTNAME)
     if (!res.ok) {
       return this.renderModal('ERRORED')
     }

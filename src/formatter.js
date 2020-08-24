@@ -3,7 +3,7 @@
  * Licensed under the Open Software License version 3.0
  */
 
-const fit = require('./commons/fit')
+const fit = require('./public/src/commons/fit')
 
 module.exports = class Formatter {
   constructor (payload) {

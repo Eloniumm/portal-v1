@@ -1,9 +1,2 @@
-# JetBrains memes
-.idea
-
-# NodeJS memes
 node_modules
-
-# prod memes
-config.json
-dist
+user/archives/users/*/

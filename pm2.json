@@ -1,8 +1,8 @@
 {
   "apps": [
     {
-      "name": "Discord Chat Replica",
-      "script": "./index.js"
+      "name": "DiscordTickets-Portal",
+      "script": "./bin/www"
     }
   ]
 }
