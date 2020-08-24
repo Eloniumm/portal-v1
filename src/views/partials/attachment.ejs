@@ -3,9 +3,9 @@
   Licensed under the Open Software License version 3.0
 -->
 <% if (attachment.width && attachment.width > 0 && attachment.width && attachment.width > 0) { %>
-    <% if (/\.(png|jpe?g|webp|gif)$/i.test(attachment.filename)) { %>
+    <% if (/\.(png|jpe?g|webp|gif)$/i.test(attachment.name)) { %>
         <%
-            const url = new URL(attachment.proxy_url || attachment.url)
+            const url = new URL(attachment.proxyURL || attachment.url)
             url.searchParams.append('width', parseInt(attachment.displayMaxWidth).toString())
             url.searchParams.append('height', parseInt(attachment.displayMaxHeight).toString())
         %>
@@ -13,12 +13,12 @@
              data-width='<%= attachment.width %>' data-height='<%= attachment.height %>'
              data-url='<%= attachment.url %>' style='max-width: <%= attachment.displayMaxWidth %>'>
     <% } %>
-    <% if (/\.(mp4|webm|mov)$/i.test(attachment.filename) && attachment.proxy_url) { %>
+    <% if (/\.(mp4|webm|mov)$/i.test(attachment.name) && attachment.proxyURL) { %>
         <div class='decorated-video'
              style='width: <%= attachment.displayMaxWidth %>; height: <%= attachment.displayMaxHeight %>'>
             <div class='metadata'>
                 <div class='details'>
-                    <span class='name'><%= attachment.filename %></span>
+                    <span class='name'><%= attachment.name %></span>
                     <span class='size'><%= attachment.formattedBytes %></span>
                 </div>
                 <a href='<%= attachment.url %>' target='_blank' class='download'>
@@ -27,21 +27,21 @@
                     </svg>
                 </a>
             </div>
-            <video src='<%= attachment.url %>' poster='<%= attachment.proxy_url %>?format=jpeg' controls
+            <video src='<%= attachment.url %>' poster='<%= attachment.proxyURL %>?format=jpeg' controls
                    controlsList='nodownload' disablePictureInPicture></video>
         </div>
     <% } %>
 <% } else { %>
     <% const textRegex = /\.(?:txt|md|log|c\+\+|cpp|cc|c|h|hpp|mm|m|json|js|jsx|rb|rake|py|asm|fs|cgi|bat|rss|java|graphml|idb|lua|o|gml|prl|sls|conf|cmake|make|sln|vbe|cxx|wbf|vbs|r|wml|php|bash|applescript|fcgi|yaml|ex|exs|sh|ml|actionscript|html|xhtml|htm|xml|xls|xsd|css|styl|scss|go)$/i%>
-    <% const isAudio = /\.(mp3|ogg|wav|flac)$/i.test(attachment.filename) && attachment.url %>
+    <% const isAudio = /\.(mp3|ogg|wav|flac)$/i.test(attachment.name) && attachment.url %>
     <message-attachment class='<%= isAudio ? ' audio' : '' %>'>
         <div class='data'>
             <img src='https://discord.com/assets/<%= attachment.iconHash %>.svg' alt='' class='icon'/>
             <div class='details'>
-                <a href='<%= attachment.url %>' target='_blank'><%= attachment.filename %></a>
+                <a href='<%= attachment.url %>' target='_blank'><%= attachment.name %></a>
                 <span><%= attachment.formattedBytes %></span>
             </div>
-            <% if (textRegex.test(attachment.filename)) { %>
+            <% if (textRegex.test(attachment.name)) { %>
                 <div class='preview'>
                     <svg width='20' height='20' viewBox='0 0 18 20'>
                         <path fill='currentColor'

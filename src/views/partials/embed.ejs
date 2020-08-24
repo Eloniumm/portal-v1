@@ -11,14 +11,14 @@
 <% } else { %>
     <% if ((embed.thumbnail || embed.video) && (embed.type === 'gifv' || (embed.type !== 'rich' && !embed.author && !embed.title))) { %>
         <% if (embed.video) { %>
-            <video class='video' src='<%= embed.video.proxy_url || embed.video.url %>'
+            <video class='video' src='<%= embed.video.proxyURL || embed.video.url %>'
                     <%- embed.type === 'gifv' ? 'autoplay muted loop is="message-gifv"' : 'controls disablePictureInPicture' %>
                    data-url='<%= embed.url || '' %>' controlsList='nodownload'
                    data-width='<%= embed.video.width %>' data-height='<%= embed.video.height %>'
                    style='max-width: <%= embed.video.displayMaxWidth %>'></video>
         <% } else { %>
             <%
-                const url = new URL(embed.thumbnail.proxy_url || embed.thumbnail.url)
+                const url = new URL(embed.thumbnail.proxyURL || embed.thumbnail.url)
                 url.searchParams.append('width', parseInt(embed.thumbnail.displayMaxWidth).toString())
                 url.searchParams.append('height', parseInt(embed.thumbnail.displayMaxHeight).toString())
             %>
@@ -86,7 +86,7 @@
                 </div>
                 <% if (!embed.video && embed.thumbnail) { %>
                     <%
-                        const url = new URL(embed.thumbnail.proxy_url || embed.thumbnail.url)
+                        const url = new URL(embed.thumbnail.proxyURL || embed.thumbnail.url)
                         url.searchParams.append('width', '80')
                         url.searchParams.append('height', '80')
                     %>
@@ -96,9 +96,9 @@
                 <% } %>
             </div>
             <% if (embed.video) { %>
-                <div class='embed-video' is='message-video' data-url='<%= embed.video.proxy_url || embed.video.url %>'
+                <div class='embed-video' is='message-video' data-url='<%= embed.video.proxyURL || embed.video.url %>'
                      style='width: <%= embed.video.displayMaxWidth %>; height: <%= embed.video.displayMaxHeight %>'>
-                    <img is='message-image' src='<%= embed.thumbnail.proxy_url || embed.thumbnail.url %>'
+                    <img is='message-image' src='<%= embed.thumbnail.proxyURL || embed.thumbnail.url %>'
                          style='width: <%= embed.video.displayMaxWidth %>; height: <%= embed.video.displayMaxHeight %>'
                          alt='Thumbnail' class='thumb'/>
                     <div class='controls'>
@@ -123,7 +123,7 @@
                         <div class='column'>
                             <% for (const image of images) { %>
                                 <%
-                                    const url = new URL(image.proxy_url || image.url)
+                                    const url = new URL(image.proxyURL || image.url)
                                     url.searchParams.append('width', parseInt(embed.image.displayMaxWidth).toString())
                                     url.searchParams.append('height', parseInt(embed.image.displayMaxHeight).toString())
                                 %>
@@ -138,7 +138,7 @@
                 </div>
             <% } else if (embed.image) { %>
                 <%
-                    const url = new URL(embed.image.proxy_url || embed.image.url)
+                    const url = new URL(embed.image.proxyURL || embed.image.url)
                     url.searchParams.append('width', parseInt(embed.image.displayMaxWidth).toString())
                     url.searchParams.append('height', parseInt(embed.image.displayMaxHeight).toString())
                 %>

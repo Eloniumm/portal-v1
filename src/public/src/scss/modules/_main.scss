@@ -10,6 +10,7 @@
   --background-extreme-dark: #18191c;
   --background-hover: rgba(4, 4, 5, 0.07);
   --background-context-hover: rgba(79, 84, 92, .16);
+  --scrollbar-background: #2E3338;
   --color: #fff;
   --color-light-gray: #b9bbbe;
   --color-gray: #72767d;
@@ -85,7 +86,7 @@ html {
 }
 
 ::-webkit-scrollbar {
-  background-color: transparent;
+  background-color: var(--scrollbar-background);
   width: 8px;
 }
 

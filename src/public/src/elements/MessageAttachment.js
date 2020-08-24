@@ -27,7 +27,7 @@ class MessageAttachment extends HTMLElement {
   }
 
   renderModal (state, contents) {
-    const filename = this.querySelector('a').textContent
+    const name = this.querySelector('a').textContent
     let container = document.querySelector('.modal-container')
     if (!container) {
       const close = () => {
@@ -44,7 +44,7 @@ class MessageAttachment extends HTMLElement {
       }, e('div', { class: 'modal' }, [
         e('div', { class: 'modal-header' }, 'Attachment'),
         e('div', { class: 'modal-body' }, [
-          e('div', null, [ e('b', null, 'Filename:'), ` ${filename}` ]),
+          e('div', null, [ e('b', null, 'name:'), ` ${name}` ]),
           e('div', null, [ e('b', null, 'File size:'), ` ${this.querySelector('span').textContent}` ]),
           e('div', { class: 'attachment-details' })
         ]),
@@ -66,7 +66,7 @@ class MessageAttachment extends HTMLElement {
         break
       case 'FETCHED':
         el = e('div', { class: 'contents' }, [
-          e('div', { class: 'lang' }, filename.split('.').pop()),
+          e('div', { class: 'lang' }, name.split('.').pop()),
           e('div', { class: 'shitcode' }, [
             e('div', { class: 'lines' }),
             e('code', null, contents)
