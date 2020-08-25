@@ -10,7 +10,7 @@ class MessageHeader extends HTMLElement {
     const image = this.parentElement.previousElementSibling.previousElementSibling
     createUserPopout(this.querySelector('.name'), {
       id: this.parentElement.parentElement.dataset.author,
-      username: this.querySelector('.name').textContent,
+      username: this.parentElement.parentElement.dataset.username,
       discriminator: image.dataset.discriminator,
       avatar: image.src,
       badge: this.querySelector('.badge').textContent

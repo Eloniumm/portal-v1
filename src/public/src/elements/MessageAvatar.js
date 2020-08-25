@@ -16,7 +16,7 @@ class MessageAvatar extends HTMLImageElement {
     const contents = this.nextElementSibling.nextElementSibling
     createUserPopout(this, {
       id: this.parentElement.dataset.author,
-      username: contents.querySelector('.name').textContent,
+      username: this.parentElement.dataset.username,
       discriminator: this.dataset.discriminator,
       avatar: this.src,
       badge: contents.querySelector('.badge').textContent

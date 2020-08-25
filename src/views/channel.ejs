@@ -8,7 +8,7 @@
     <meta charset='UTF-8'/>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'/>
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no'/>
-    <title>#<%= data.ticket.name %> • <%= title %></title>
+    <title>#<%= data.ticket.name %> archive • <%= title %></title>
 
     <meta name='theme-color' content='#7289DA'/>
     <meta property='og:locale' content='en_GB'/>
@@ -32,7 +32,7 @@
         <div class='welcome'>
             <div class='channel-icon'></div>
             <h1>Welcome to <b>#<%= data.ticket.name %></b>!</h1>
-            <div>Messages: <%= data.messages.length %></div>
+            <div>Messages: <%= data.messages.length %> <a href="./<%= data.ticket.channel %>.json">(source)</a></div>
         </div>
 
         <discord-messages>

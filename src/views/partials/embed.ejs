@@ -2,7 +2,7 @@
   Copyright (c) 2020 Bowser65
   Licensed under the Open Software License version 3.0
 -->
-<% if (embed.provider && embed.provider.name.toLowerCase() === 'spotify') { %>
+<% if (embed.provider && embed.provider.name === 'Spotify') { %>
     <div class='spotify'>
         <% const url = new URL(embed.url).pathname %>
         <iframe src='https://open.spotify.com/embed<%= url %>' frameborder='0'

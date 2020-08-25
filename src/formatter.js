@@ -4,8 +4,6 @@
  */
 
 const fit = require('./public/src/commons/fit');
-const ChildLogger = require('leekslazylogger').ChildLogger;
-const log = new ChildLogger();
 module.exports = class Formatter {
 	constructor (payload) {
 		this.payload = payload;

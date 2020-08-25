@@ -38,7 +38,7 @@
             </discord-message>
         <% } else { %>
 
-            <discord-message data-id='<%= msg.id %>' data-author='<%= msg.author %>'
+            <discord-message data-id='<%= msg.id %>' data-author='<%= msg.author %>' data-username=' <%= author.username %> '
                              class='<% if (group.indexOf(msg) === 0) { %> group-start<% } %><% if (msg.deleted) { %> deleted<% } %>'>
                 <img is='message-avatar' src='<%= author.avatar %>' data-discriminator='<%= author.discriminator %>'
                      alt='avatar' class='avatar'/>
@@ -52,7 +52,11 @@
                 <div class='contents'>
      
                     <message-header>
-                        <span class='name'><%= author.username %></span>
+						<% if (author.color) { %>
+							<span class='name' style='color:<%=markdown.int2rgba(author.color)%>!important;'><%= author.displayName %></span>
+						<% } else {%>
+							<span class='name' ><%= author.displayName %></span>
+						<% } %>
                         <span class='badge'><%= author.badge %></span>
   
                         <message-date class='date' data-type='date' data-timestamp='<%= msg.time %>'>

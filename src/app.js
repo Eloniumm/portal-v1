@@ -1,3 +1,11 @@
+/**
+ * 
+ *  @name DiscordTickets-Portal
+ *  @author eartharoid <contact@eartharoid.me>
+ *  @license OSL-3.0
+ * 
+ */
+
 const path = require('path');
 const fs = require('fs');
 const express = require('express');

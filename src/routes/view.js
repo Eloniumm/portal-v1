@@ -1,3 +1,11 @@
+/**
+ * 
+ *  @name DiscordTickets-Portal
+ *  @author eartharoid <contact@eartharoid.me>
+ *  @license OSL-3.0
+ * 
+ */
+
 const ChildLogger = require('leekslazylogger').ChildLogger;
 const log = new ChildLogger();
 
