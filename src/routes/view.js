@@ -21,10 +21,14 @@ module.exports = {
 		if (!data || data === null) 
 			return res.status(400).send({status: 400, message: 'Bad Request'});
 
+		let HOST = process.env.HOST;
+		if (HOST[HOST.length - 1] === '/')
+			HOST = HOST.slice(0, -1);
+
 		let payload = {
 			data: data,
 			markdown,
-			hostname: `http://${req.hostname}`,
+			hostname: HOST,
 			title: process.env.NAME,
 			time: fs.statSync(path).mtime
 		};
