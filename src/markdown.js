@@ -119,7 +119,9 @@ class Markdown {
 							const res = hljs.highlight(node.lang, node.content);
 							code = res.value;
 							lang = res.language;
-						} catch (e) {}
+						} catch (e) {
+							console.warn(e);
+						}
 					}
 					if (!code) {
 						code = output({
