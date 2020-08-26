@@ -13,6 +13,7 @@ This tutorial assumes you have a basic knowledge of server system administration
 3. Configure the bot (see [Bot Configuration](#BotConfiguration))
 4. Set up an NGINX reverse proxy (optionally with SSL - eg. `tickets.example.com` [80/443] -> `localhost:8080` [8080])
 5. Set up PM2 or systemd to keep it running. (`node bin/www`)
+6. Optionally change `src/public/favicon.ico` and `src/public/assets/img/logo.png`
 
 ## Configuration
 
