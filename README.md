@@ -28,7 +28,7 @@ This tutorial assumes you have a basic knowledge of server system administration
 
 ### Bot Configuration
 
-**DiscordTickets bot condfiguartion:**
+**DiscordTickets bot configuartion:**
 In `user/config.js`, set `transcripts.web.enabled` and `transcripts.web.server`.
 
 Then set `ARCHIVES_KEY` in `user/.env` to the same key you set before.
