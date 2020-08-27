@@ -7,12 +7,14 @@
  */
 
 const fs = require('fs');
+const { join } = require('path');
 
 module.exports = {
 	method: 'post',
 	path: '/:user/:channel',
 	async execute(req, res) {
-		const path = `user/archives/users/${req.params.user}/${req.params.channel}.json`;
+		const dir = join('user/archives/users', req.params.user);
+		const path = join(dir, req.params.channel + '.json');
 
 		if (!req.query.key || req.query.key !== process.env.KEY)
 			return res.status(401).send({
@@ -30,6 +32,8 @@ module.exports = {
 		if (HOST[HOST.length - 1] === '/')
 			HOST = HOST.slice(0, -1);
 
+		if (!fs.existsSync(dir))
+			fs.mkdirSync(dir);
 		fs.writeFileSync(path, JSON.stringify(req.body));
 
 		res.status(200).send({
