@@ -4,6 +4,11 @@
 
 This is the accompanying archives web server for [DiscordTickets](https://github.com/eartharoid/DiscordTickets).
 
+## Screenshot
+
+![Screenshot](https://i.imgur.com/UvIxqOJ.png)
+
+
 ## Installation
 
 This tutorial assumes you have a basic knowledge of server system administration.
