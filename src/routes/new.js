@@ -8,6 +8,7 @@
 
 const fs = require('fs');
 const { join } = require('path');
+const Formatter = require('../formatter');
 
 module.exports = {
 	method: 'post',
@@ -16,17 +17,28 @@ module.exports = {
 		const dir = join('user/archives/users', req.params.user);
 		const path = join(dir, req.params.channel + '.json');
 
-		if (!req.query.key || req.query.key !== process.env.KEY)
+		let key = req.query.key;
+
+		if (!key || key !== process.env.KEY)
 			return res.status(401).send({
 				status: 401,
 				message: 'Unauthorised'
 			});
-
+		
 		if (!req.body)
 			return res.status(400).send({
 				status: 400,
 				message: 'Bad Request'
 			});
+
+		const fm = new Formatter(req.body, true);
+		const data = await fm.format();
+		if (!data || data === null)
+			return res.status(400).send({
+				status: 400,
+				message: 'Bad Request'
+			});
+
 		
 		let HOST = process.env.HOST;
 		if (HOST[HOST.length - 1] === '/')

@@ -13,9 +13,17 @@ class FormatterWarning extends Error {
 		this.name = 'FormatterWarning';
 	}	
 }
+
 module.exports = class Formatter {
-	constructor (payload) {
+	constructor (payload, strict) {
 		this.payload = payload;
+		this.strict = strict;
+	}
+
+	report(report) {
+		log.warn(report);
+		if (this.strict)
+			return true;
 	}
 
 	async format () {
@@ -162,45 +170,46 @@ module.exports = class Formatter {
 
 	_validate () {
 		// Root structure
-		if (typeof this.payload.entities !== 'object') log.warn(new FormatterWarning('Validation error'));
-		if (typeof this.payload.messages !== 'object') log.warn(new FormatterWarning('Validation error'));
-		if (!Array.isArray(this.payload.messages)) log.warn(new FormatterWarning('Validation error'));
-		if (typeof this.payload.ticket.name !== 'string') log.warn(new FormatterWarning('Validation error'));
+		if (typeof this.payload?.entities !== 'object') return false;
+		if (typeof this.payload?.messages !== 'object') return false;
+		if (!Array.isArray(this.payload?.messages)) if (this.report(new FormatterWarning('Validation error'))) return;
+		if (typeof this.payload?.ticket !== 'object') return false;
+		if (typeof this.payload?.ticket.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 
 		// Entities
-		if (typeof this.payload.entities.users !== 'object') log.warn(new FormatterWarning('Validation error'));
-		if (typeof this.payload.entities.channels !== 'object') log.warn(new FormatterWarning('Validation error'));
-		if (typeof this.payload.entities.roles !== 'object') log.warn(new FormatterWarning('Validation error'));
+		if (typeof this.payload?.entities.users !== 'object') return false;
+		if (typeof this.payload?.entities.channels !== 'object') return false;
+		if (typeof this.payload?.entities.roles !== 'object') return false;
 
 		// Entities.Users
 		for (const user of Object.values(this.payload.entities.users)) {
-			if (typeof user.avatar !== 'string') log.warn(new FormatterWarning('Validation error'));
-			if (typeof user.username !== 'string') log.warn(new FormatterWarning('Validation error'));
-			if (typeof user.discriminator !== 'string') log.warn(new FormatterWarning('Validation error'));
-			if (user.badge && typeof user.badge !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (typeof user.avatar !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (typeof user.username !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (typeof user.discriminator !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (user.badge && typeof user.badge !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 		}
 
 		// Entities.Channels
 		for (const channel of Object.values(this.payload.entities.channels)) {
-			if (typeof channel.name !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (typeof channel.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 		}
 
 		// Entities.Roles
 		for (const role of Object.values(this.payload.entities.roles)) {
-			if (typeof role.name !== 'string') log.warn(new FormatterWarning('Validation error'));
-			if (role.color && typeof role.color !== 'number') log.warn(new FormatterWarning('Validation error'));
+			if (typeof role.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (role.color && typeof role.color !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
 		}
 	
 		// Messages
 		for (const message of this.payload.messages) {
-			if (typeof message.id !== 'string') log.warn(new FormatterWarning('Validation error'));
-			if (message.type && (typeof message.type !== 'number' || message.type < 0 || message.type > 15)) log.warn(new FormatterWarning('Validation error'));
-			if (typeof message.author !== 'string') log.warn(new FormatterWarning('Validation error'));
-			if (typeof message.time !== 'number') log.warn(new FormatterWarning('Validation error'));
-			if (typeof message.deleted !== 'undefined' && typeof message.deleted !== 'boolean') log.warn(new FormatterWarning('Validation error'));
-			if (message.content && typeof message.content !== 'string') log.warn(new FormatterWarning('Validation error'));
-			if (message.embeds && (typeof message.embeds !== 'object' || !Array.isArray(message.embeds))) log.warn(new FormatterWarning('Validation error'));
-			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) log.warn(new FormatterWarning('Validation error'));
+			if (typeof message.id !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (message.type && (typeof message.type !== 'number' || message.type < 0 || message.type > 15)) if (this.report(new FormatterWarning('Validation error'))) return;
+			if (typeof message.author !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (typeof message.time !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (typeof message.deleted !== 'undefined' && typeof message.deleted !== 'boolean') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (message.content && typeof message.content !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+			if (message.embeds && (typeof message.embeds !== 'object' || !Array.isArray(message.embeds))) if (this.report(new FormatterWarning('Validation error'))) return;
+			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) if (this.report(new FormatterWarning('Validation error'))) return;
 
 			// For type 0, least 1 embed OR 1 attachment OR contents
 			if (
@@ -216,80 +225,80 @@ module.exports = class Formatter {
 			if (message.embeds) {
 				for (const embed of message.embeds) {
 					// Messages.Embeds.Timestamp
-					if (embed.timestamp && typeof embed.timestamp !== 'string') log.warn(new FormatterWarning('Validation error'));
+					if (embed.timestamp && typeof embed.timestamp !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 
 					// Messages.Embeds.Provider
-					if (embed.provider && typeof embed.provider !== 'object') log.warn(new FormatterWarning('Validation error'));
+					if (embed.provider && typeof embed.provider !== 'object') if (this.report(new FormatterWarning('Validation error'))) return;
 					if (embed.provider) {
-						if (embed.provider.name && typeof embed.provider.name !== 'string') log.warn(new FormatterWarning('Validation error'));
-						if (embed.provider.url && typeof embed.provider.url !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.provider.name && typeof embed.provider.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.provider.url && typeof embed.provider.url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 					}
 
 					// Messages.Embeds.Author
-					if (embed.author && typeof embed.author !== 'object') log.warn(new FormatterWarning('Validation error'));
+					if (embed.author && typeof embed.author !== 'object') if (this.report(new FormatterWarning('Validation error'))) return;
 					if (embed.author) {
-						if (embed.author.name && typeof embed.author.name !== 'string') log.warn(new FormatterWarning('Validation error'));
-						if (embed.author.url && typeof embed.author.url !== 'string') log.warn(new FormatterWarning('Validation error'));
-						if (embed.author.icon_url && typeof embed.author.icon_url !== 'string') log.warn(new FormatterWarning('Validation error'));
-						if (embed.author.icon_proxyURL && typeof embed.author.icon_proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.author.name && typeof embed.author.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.author.url && typeof embed.author.url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.author.icon_url && typeof embed.author.icon_url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.author.icon_proxyURL && typeof embed.author.icon_proxyURL !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 					}
 
 					// Messages.Embeds.Description
-					if (embed.description && typeof embed.description !== 'string') log.warn(new FormatterWarning('Validation error'));
+					if (embed.description && typeof embed.description !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 
 					// Messages.Embeds.Fields
-					if (embed.fields && (typeof embed.fields !== 'object' || !Array.isArray(embed.fields))) log.warn(new FormatterWarning('Validation error'));
+					if (embed.fields && (typeof embed.fields !== 'object' || !Array.isArray(embed.fields))) if (this.report(new FormatterWarning('Validation error'))) return;
 					if (embed.fields) {
 						for (const field of embed.fields) {
-							if (typeof field.name !== 'string') log.warn(new FormatterWarning('Validation error'));
-							if (typeof field.value !== 'string') log.warn(new FormatterWarning('Validation error'));
-							if (![ 'undefined', 'boolean' ].includes(typeof field.inline)) log.warn(new FormatterWarning('Validation error'));
+							if (typeof field.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+							if (typeof field.value !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+							if (![ 'undefined', 'boolean' ].includes(typeof field.inline)) if (this.report(new FormatterWarning('Validation error'))) return;
 						}
 					}
 
 					// Messages.Embeds.Thumbnail
 					// Messages.Embeds.Image
 					[ 'thumbnail', 'image' ].forEach(field => {
-						if (embed[field] && typeof embed[field] !== 'object') log.warn(new FormatterWarning('Validation error'));
+						if (embed[field] && typeof embed[field] !== 'object') if (this.report(new FormatterWarning('Validation error'))) return;
 						if (embed[field]) {
-							if (embed[field].url && typeof embed[field].url !== 'string') log.warn(new FormatterWarning('Validation error'));
-							if (embed[field].proxyURL && typeof embed[field].proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
-							if (embed[field].width && typeof embed[field].width !== 'number') log.warn(new FormatterWarning('Validation error'));
-							if (embed[field].height && typeof embed[field].height !== 'number') log.warn(new FormatterWarning('Validation error'));
+							if (embed[field].url && typeof embed[field].url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+							if (embed[field].proxyURL && typeof embed[field].proxyURL !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+							if (embed[field].width && typeof embed[field].width !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
+							if (embed[field].height && typeof embed[field].height !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
 						}
 					});
 
 					// Messages.Embeds.Video
-					if (embed.video && typeof embed.video !== 'object') log.warn(new FormatterWarning('Validation error'));
+					if (embed.video && typeof embed.video !== 'object') if (this.report(new FormatterWarning('Validation error'))) return;
 					if (embed.video) {
-						if (embed.video.url && typeof embed.video.url !== 'string') log.warn(new FormatterWarning('Validation error'));
-						if (embed.video.width && typeof embed.video.width !== 'number') log.warn(new FormatterWarning('Validation error'));
-						if (embed.video.height && typeof embed.video.height !== 'number') log.warn(new FormatterWarning('Validation error'));
+						if (embed.video.url && typeof embed.video.url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.video.width && typeof embed.video.width !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.video.height && typeof embed.video.height !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
 					}
 
 					// Messages.Embeds.Url
-					if (embed.url && typeof embed.url !== 'string') log.warn(new FormatterWarning('Validation error'));
+					if (embed.url && typeof embed.url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 
 					// Messages.Embeds.Footer
-					if (embed.footer && typeof embed.footer !== 'object') log.warn(new FormatterWarning('Validation error'));
+					if (embed.footer && typeof embed.footer !== 'object') if (this.report(new FormatterWarning('Validation error'))) return;
 					if (embed.footer) {
-						if (embed.footer.text && typeof embed.footer.text !== 'string') log.warn(new FormatterWarning('Validation error'));
-						if (embed.footer.icon_url && typeof embed.footer.icon_url !== 'string') log.warn(new FormatterWarning('Validation error'));
-						if (embed.footer.icon_proxyURL && typeof embed.footer.icon_proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.footer.text && typeof embed.footer.text !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.footer.icon_url && typeof embed.footer.icon_url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+						if (embed.footer.icon_proxyURL && typeof embed.footer.icon_proxyURL !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 					}
 				}
 			}
 
 			// Messages.Attachments
-			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) log.warn(new FormatterWarning('Validation error'));
+			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) if (this.report(new FormatterWarning('Validation error'))) return;
 			if (message.attachments) {
 				for (const attachment of message.attachments) {
-					if (typeof attachment.name !== 'string') log.warn(new FormatterWarning('Validation error'));
-					if (typeof attachment.size !== 'number') log.warn(new FormatterWarning('Validation error'));
-					if (typeof attachment.url !== 'string') log.warn(new FormatterWarning('Validation error'));
-					if (typeof attachment.proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
-					if (attachment.width && typeof attachment.width !== 'number') log.warn(new FormatterWarning('Validation error'));
-					if (attachment.height && typeof attachment.height !== 'number') log.warn(new FormatterWarning('Validation error'));
+					if (typeof attachment.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+					if (typeof attachment.size !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
+					if (typeof attachment.url !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+					if (typeof attachment.proxyURL !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+					if (attachment.width && typeof attachment.width !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
+					if (attachment.height && typeof attachment.height !== 'number') if (this.report(new FormatterWarning('Validation error'))) return;
 				}
 			}
 		}
