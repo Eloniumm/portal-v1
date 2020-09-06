@@ -2,8 +2,17 @@
  * Copyright (c) 2020 Bowser65
  * Licensed under the Open Software License version 3.0
  */
+const { ChildLogger } = require('leekslazylogger');
+const log = new ChildLogger();
 
 const fit = require('./public/src/commons/fit');
+
+class FormatterWarning extends Error {
+	constructor(text) {
+		super(text);
+		this.name = 'FormatterWarning';
+	}	
+}
 module.exports = class Formatter {
 	constructor (payload) {
 		this.payload = payload;
@@ -153,45 +162,45 @@ module.exports = class Formatter {
 
 	_validate () {
 		// Root structure
-		if (typeof this.payload.entities !== 'object') return false;
-		if (typeof this.payload.messages !== 'object') return false;
-		if (!Array.isArray(this.payload.messages)) return false;
-		if (typeof this.payload.ticket.name !== 'string') return false;
+		if (typeof this.payload.entities !== 'object') log.warn(new FormatterWarning('Validation error'));
+		if (typeof this.payload.messages !== 'object') log.warn(new FormatterWarning('Validation error'));
+		if (!Array.isArray(this.payload.messages)) log.warn(new FormatterWarning('Validation error'));
+		if (typeof this.payload.ticket.name !== 'string') log.warn(new FormatterWarning('Validation error'));
 
 		// Entities
-		if (typeof this.payload.entities.users !== 'object') return false;
-		if (typeof this.payload.entities.channels !== 'object') return false;
-		if (typeof this.payload.entities.roles !== 'object') return false;
+		if (typeof this.payload.entities.users !== 'object') log.warn(new FormatterWarning('Validation error'));
+		if (typeof this.payload.entities.channels !== 'object') log.warn(new FormatterWarning('Validation error'));
+		if (typeof this.payload.entities.roles !== 'object') log.warn(new FormatterWarning('Validation error'));
 
 		// Entities.Users
 		for (const user of Object.values(this.payload.entities.users)) {
-			if (typeof user.avatar !== 'string') return false;
-			if (typeof user.username !== 'string') return false;
-			if (typeof user.discriminator !== 'string') return false;
-			if (user.badge && typeof user.badge !== 'string') return false;
+			if (typeof user.avatar !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (typeof user.username !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (typeof user.discriminator !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (user.badge && typeof user.badge !== 'string') log.warn(new FormatterWarning('Validation error'));
 		}
 
 		// Entities.Channels
 		for (const channel of Object.values(this.payload.entities.channels)) {
-			if (typeof channel.name !== 'string') return false;
+			if (typeof channel.name !== 'string') log.warn(new FormatterWarning('Validation error'));
 		}
 
 		// Entities.Roles
 		for (const role of Object.values(this.payload.entities.roles)) {
-			if (typeof role.name !== 'string') return false;
-			if (role.color && typeof role.color !== 'number') return false;
+			if (typeof role.name !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (role.color && typeof role.color !== 'number') log.warn(new FormatterWarning('Validation error'));
 		}
 	
 		// Messages
 		for (const message of this.payload.messages) {
-			if (typeof message.id !== 'string') return false;
-			if (message.type && (typeof message.type !== 'number' || message.type < 0 || message.type > 15)) return false;
-			if (typeof message.author !== 'string') return false;
-			if (typeof message.time !== 'number') return false;
-			if (typeof message.deleted !== 'undefined' && typeof message.deleted !== 'boolean') return false;
-			if (message.content && typeof message.content !== 'string') return false;
-			if (message.embeds && (typeof message.embeds !== 'object' || !Array.isArray(message.embeds))) return false;
-			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) return false;
+			if (typeof message.id !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (message.type && (typeof message.type !== 'number' || message.type < 0 || message.type > 15)) log.warn(new FormatterWarning('Validation error'));
+			if (typeof message.author !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (typeof message.time !== 'number') log.warn(new FormatterWarning('Validation error'));
+			if (typeof message.deleted !== 'undefined' && typeof message.deleted !== 'boolean') log.warn(new FormatterWarning('Validation error'));
+			if (message.content && typeof message.content !== 'string') log.warn(new FormatterWarning('Validation error'));
+			if (message.embeds && (typeof message.embeds !== 'object' || !Array.isArray(message.embeds))) log.warn(new FormatterWarning('Validation error'));
+			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) log.warn(new FormatterWarning('Validation error'));
 
 			// For type 0, least 1 embed OR 1 attachment OR contents
 			if (
@@ -207,80 +216,80 @@ module.exports = class Formatter {
 			if (message.embeds) {
 				for (const embed of message.embeds) {
 					// Messages.Embeds.Timestamp
-					if (embed.timestamp && typeof embed.timestamp !== 'string') return false;
+					if (embed.timestamp && typeof embed.timestamp !== 'string') log.warn(new FormatterWarning('Validation error'));
 
 					// Messages.Embeds.Provider
-					if (embed.provider && typeof embed.provider !== 'object') return false;
+					if (embed.provider && typeof embed.provider !== 'object') log.warn(new FormatterWarning('Validation error'));
 					if (embed.provider) {
-						if (embed.provider.name && typeof embed.provider.name !== 'string') return false;
-						if (embed.provider.url && typeof embed.provider.url !== 'string') return false;
+						if (embed.provider.name && typeof embed.provider.name !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.provider.url && typeof embed.provider.url !== 'string') log.warn(new FormatterWarning('Validation error'));
 					}
 
 					// Messages.Embeds.Author
-					if (embed.author && typeof embed.author !== 'object') return false;
+					if (embed.author && typeof embed.author !== 'object') log.warn(new FormatterWarning('Validation error'));
 					if (embed.author) {
-						if (embed.author.name && typeof embed.author.name !== 'string') return false;
-						if (embed.author.url && typeof embed.author.url !== 'string') return false;
-						if (embed.author.icon_url && typeof embed.author.icon_url !== 'string') return false;
-						if (embed.author.icon_proxyURL && typeof embed.author.icon_proxyURL !== 'string') return false;
+						if (embed.author.name && typeof embed.author.name !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.author.url && typeof embed.author.url !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.author.icon_url && typeof embed.author.icon_url !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.author.icon_proxyURL && typeof embed.author.icon_proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
 					}
 
 					// Messages.Embeds.Description
-					if (embed.description && typeof embed.description !== 'string') return false;
+					if (embed.description && typeof embed.description !== 'string') log.warn(new FormatterWarning('Validation error'));
 
 					// Messages.Embeds.Fields
-					if (embed.fields && (typeof embed.fields !== 'object' || !Array.isArray(embed.fields))) return false;
+					if (embed.fields && (typeof embed.fields !== 'object' || !Array.isArray(embed.fields))) log.warn(new FormatterWarning('Validation error'));
 					if (embed.fields) {
 						for (const field of embed.fields) {
-							if (typeof field.name !== 'string') return false;
-							if (typeof field.value !== 'string') return false;
-							if (![ 'undefined', 'boolean' ].includes(typeof field.inline)) return false;
+							if (typeof field.name !== 'string') log.warn(new FormatterWarning('Validation error'));
+							if (typeof field.value !== 'string') log.warn(new FormatterWarning('Validation error'));
+							if (![ 'undefined', 'boolean' ].includes(typeof field.inline)) log.warn(new FormatterWarning('Validation error'));
 						}
 					}
 
 					// Messages.Embeds.Thumbnail
 					// Messages.Embeds.Image
 					[ 'thumbnail', 'image' ].forEach(field => {
-						if (embed[field] && typeof embed[field] !== 'object') return false;
+						if (embed[field] && typeof embed[field] !== 'object') log.warn(new FormatterWarning('Validation error'));
 						if (embed[field]) {
-							if (embed[field].url && typeof embed[field].url !== 'string') return false;
-							if (embed[field].proxyURL && typeof embed[field].proxyURL !== 'string') return false;
-							if (embed[field].width && typeof embed[field].width !== 'number') return false;
-							if (embed[field].height && typeof embed[field].height !== 'number') return false;
+							if (embed[field].url && typeof embed[field].url !== 'string') log.warn(new FormatterWarning('Validation error'));
+							if (embed[field].proxyURL && typeof embed[field].proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
+							if (embed[field].width && typeof embed[field].width !== 'number') log.warn(new FormatterWarning('Validation error'));
+							if (embed[field].height && typeof embed[field].height !== 'number') log.warn(new FormatterWarning('Validation error'));
 						}
 					});
 
 					// Messages.Embeds.Video
-					if (embed.video && typeof embed.video !== 'object') return false;
+					if (embed.video && typeof embed.video !== 'object') log.warn(new FormatterWarning('Validation error'));
 					if (embed.video) {
-						if (embed.video.url && typeof embed.video.url !== 'string') return false;
-						if (embed.video.width && typeof embed.video.width !== 'number') return false;
-						if (embed.video.height && typeof embed.video.height !== 'number') return false;
+						if (embed.video.url && typeof embed.video.url !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.video.width && typeof embed.video.width !== 'number') log.warn(new FormatterWarning('Validation error'));
+						if (embed.video.height && typeof embed.video.height !== 'number') log.warn(new FormatterWarning('Validation error'));
 					}
 
 					// Messages.Embeds.Url
-					if (embed.url && typeof embed.url !== 'string') return false;
+					if (embed.url && typeof embed.url !== 'string') log.warn(new FormatterWarning('Validation error'));
 
 					// Messages.Embeds.Footer
-					if (embed.footer && typeof embed.footer !== 'object') return false;
+					if (embed.footer && typeof embed.footer !== 'object') log.warn(new FormatterWarning('Validation error'));
 					if (embed.footer) {
-						if (embed.footer.text && typeof embed.footer.text !== 'string') return false;
-						if (embed.footer.icon_url && typeof embed.footer.icon_url !== 'string') return false;
-						if (embed.footer.icon_proxyURL && typeof embed.footer.icon_proxyURL !== 'string') return false;
+						if (embed.footer.text && typeof embed.footer.text !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.footer.icon_url && typeof embed.footer.icon_url !== 'string') log.warn(new FormatterWarning('Validation error'));
+						if (embed.footer.icon_proxyURL && typeof embed.footer.icon_proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
 					}
 				}
 			}
 
 			// Messages.Attachments
-			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) return false;
+			if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) log.warn(new FormatterWarning('Validation error'));
 			if (message.attachments) {
 				for (const attachment of message.attachments) {
-					if (typeof attachment.name !== 'string') return false;
-					if (typeof attachment.size !== 'number') return false;
-					if (typeof attachment.url !== 'string') return false;
-					if (typeof attachment.proxyURL !== 'string') return false;
-					if (attachment.width && typeof attachment.width !== 'number') return false;
-					if (attachment.height && typeof attachment.height !== 'number') return false;
+					if (typeof attachment.name !== 'string') log.warn(new FormatterWarning('Validation error'));
+					if (typeof attachment.size !== 'number') log.warn(new FormatterWarning('Validation error'));
+					if (typeof attachment.url !== 'string') log.warn(new FormatterWarning('Validation error'));
+					if (typeof attachment.proxyURL !== 'string') log.warn(new FormatterWarning('Validation error'));
+					if (attachment.width && typeof attachment.width !== 'number') log.warn(new FormatterWarning('Validation error'));
+					if (attachment.height && typeof attachment.height !== 'number') log.warn(new FormatterWarning('Validation error'));
 				}
 			}
 		}
