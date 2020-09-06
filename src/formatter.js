@@ -170,16 +170,16 @@ module.exports = class Formatter {
 
 	_validate () {
 		// Root structure
-		if (typeof this.payload?.entities !== 'object') return false;
-		if (typeof this.payload?.messages !== 'object') return false;
-		if (!Array.isArray(this.payload?.messages)) if (this.report(new FormatterWarning('Validation error'))) return;
-		if (typeof this.payload?.ticket !== 'object') return false;
-		if (typeof this.payload?.ticket.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
+		if (typeof this.payload.entities !== 'object') return false;
+		if (typeof this.payload.messages !== 'object') return false;
+		if (!Array.isArray(this.payload.messages)) if (this.report(new FormatterWarning('Validation error'))) return;
+		if (typeof this.payload.ticket !== 'object') return false;
+		if (typeof this.payload.ticket.name !== 'string') if (this.report(new FormatterWarning('Validation error'))) return;
 
 		// Entities
-		if (typeof this.payload?.entities.users !== 'object') return false;
-		if (typeof this.payload?.entities.channels !== 'object') return false;
-		if (typeof this.payload?.entities.roles !== 'object') return false;
+		if (typeof this.payload.entities.users !== 'object') return false;
+		if (typeof this.payload.entities.channels !== 'object') return false;
+		if (typeof this.payload.entities.roles !== 'object') return false;
 
 		// Entities.Users
 		for (const user of Object.values(this.payload.entities.users)) {
