@@ -10,12 +10,12 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 
-const ChildLogger = require('leekslazylogger').ChildLogger;
-const log = new ChildLogger();
+const Logger = require('leekslazylogger-express');
+const log = new Logger();
 
 const app = express();
 
-app.use(require('leekslazylogger-express'));
+app.use(log.express);
 
 // view engine setup
 app.set('views', 'src/views');
