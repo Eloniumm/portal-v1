@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
 require('dotenv').config({path: 'user/.env'});
-const Logger = require('leekslazylogger');
+const Logger = require('leekslazylogger-express');
 const log = new Logger({
 	logToFile: false
 });
-log.multi(log);
 
 const app = require('../src/app');
 const http = require('http');

@@ -6,7 +6,7 @@
  * 
  */
 
-const ChildLogger = require('leekslazylogger').ChildLogger;
+const ChildLogger = require('leekslazylogger-express');
 const log = new ChildLogger();
 
 const markdown = require('../markdown');
