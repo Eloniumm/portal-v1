@@ -8,10 +8,13 @@ This is the accompanying archives web server for [DiscordTickets](https://github
 
 ![Screenshot](https://i.imgur.com/UvIxqOJ.png)
 
+## Requirements
+
+- Node v14 or above
 
 ## Installation
 
-This tutorial assumes you have a basic knowledge of server system administration.
+These instructions assume you have a basic knowledge of server system administration.
 
 1. Clone/download the repository
 2. Edit `user/.env` (see [Configuration](#Configuration))
