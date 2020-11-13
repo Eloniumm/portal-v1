@@ -32,7 +32,7 @@
         <div class='welcome'>
             <div class='channel-icon'></div>
             <h1>Welcome to <b>#<%= data.ticket.name %></b>!</h1>
-            <div>Messages: <%= data.messages.length %> <a href="./<%= data.ticket.channel %>.json">(source)</a></div>
+            <div>Messages: <%= data.messages.length %> <a href="/<%= data.ticket.creator %>/<%= data.ticket.channel %>.json">(source)</a></div>
         </div>
 
         <discord-messages>
