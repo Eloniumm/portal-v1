@@ -7,13 +7,6 @@ const log = new ChildLogger();
 
 const fit = require('./public/src/commons/fit');
 
-class FormatterWarning extends Error {
-	constructor(text) {
-		super(text);
-		this.name = 'FormatterWarning';
-	}	
-}
-
 const SystemProcessed = Symbol('formatter.system')
 Object.defineProperty(global, '__stack', {
 	get: function () {
