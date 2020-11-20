@@ -48,10 +48,6 @@ Then set `ARCHIVES_KEY` in `user/.env` to the same key you set before.
 
 (donate if you want this faster)
 
-## Known issues
-
-- Emojis aren't rendered inside embeds
-
 ## License
 
 Released under [OSL-3.0 license](https://github.com/eartharoid/DiscordTickets-Portal/blob/master/LICENSE).
