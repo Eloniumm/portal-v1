@@ -42,9 +42,9 @@
                     <% } %>
                     <% if (embed.author) { %>
                         <div class='author'>
-                            <% if (embed.author.icon_url) { %>
+                            <% if (embed.author.iconURL) { %>
                                 <img is='message-image'
-                                     src='<%= embed.author.proxy_icon_url || embed.author.icon_url %>' alt=''/>
+                                     src='<%= embed.author.proxy_iconURL || embed.author.iconURL %>' alt=''/>
                             <% } %>
                             <% if (embed.author.url) { %>
                                 <a href='<%= embed.author.url %>' target='_blank'><%= embed.author.name %></a>
@@ -148,8 +148,8 @@
             <% } %>
             <% if (embed.footer || embed.timestamp) { %>
                 <div class='footer'>
-                    <% if (embed.footer && embed.footer.icon_url) { %>
-                        <img is='message-image' src='<%= embed.footer.proxy_icon_url || embed.footer.icon_url %>'
+                    <% if (embed.footer && embed.footer.iconURL) { %>
+                        <img is='message-image' src='<%= embed.footer.proxy_iconURL || embed.footer.iconURL %>'
                              alt=''/>
                     <% } %>
                     <% if (embed.footer && embed.footer.text) { %>

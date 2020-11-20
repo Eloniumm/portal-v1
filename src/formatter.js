@@ -69,7 +69,7 @@ module.exports = class Formatter {
 				}
 
 				attachment.formattedBytes = this._formatBytes(attachment.size);
-				attachment.iconHash = this._computeIconHash(attachment.filename);
+				attachment.iconHash = this._computeIconHash(attachment.name);
 			}
 		}
 	}
@@ -258,8 +258,8 @@ module.exports = class Formatter {
           if (embed.author) {
             if (embed.author.name && typeof embed.author.name !== 'string') this.report(__line);
             if (embed.author.url && typeof embed.author.url !== 'string') this.report(__line);
-            if (embed.author.icon_url && typeof embed.author.icon_url !== 'string') this.report(__line);
-            if (embed.author.icon_proxy_url && typeof embed.author.icon_proxy_url !== 'string') this.report(__line);
+            if (embed.author.iconURL && typeof embed.author.iconURL !== 'string') this.report(__line);
+            if (embed.author.proxyIconURL && typeof embed.author.proxyIconURL !== 'string') this.report(__line);
           }
 
           // Messages.Embeds.Description
@@ -281,7 +281,7 @@ module.exports = class Formatter {
             if (embed[field] && typeof embed[field] !== 'object') this.report(__line);
             if (embed[field]) {
               if (embed[field].url && typeof embed[field].url !== 'string') this.report(__line);
-              if (embed[field].proxy_url && typeof embed[field].proxy_url !== 'string') this.report(__line);
+              if (embed[field].proxyURL && typeof embed[field].proxyURL !== 'string') this.report(__line);
               if (embed[field].width && typeof embed[field].width !== 'number') this.report(__line);
               if (embed[field].height && typeof embed[field].height !== 'number') this.report(__line);
             }
@@ -302,8 +302,8 @@ module.exports = class Formatter {
           if (embed.footer && typeof embed.footer !== 'object') this.report(__line);
           if (embed.footer) {
             if (embed.footer.text && typeof embed.footer.text !== 'string') this.report(__line);
-            if (embed.footer.icon_url && typeof embed.footer.icon_url !== 'string') this.report(__line);
-            if (embed.footer.icon_proxy_url && typeof embed.footer.icon_proxy_url !== 'string') this.report(__line);
+            if (embed.footer.iconURL && typeof embed.footer.iconURL !== 'string') this.report(__line);
+            if (embed.footer.proxyIconURL && typeof embed.footer.proxyIconURL !== 'string') this.report(__line);
           }
         }
       }
@@ -312,10 +312,10 @@ module.exports = class Formatter {
       if (message.attachments && (typeof message.attachments !== 'object' || !Array.isArray(message.attachments))) this.report(__line);
       if (message.attachments) {
         for (const attachment of message.attachments) {
-          if (typeof attachment.filename !== 'string') this.report(__line);
+          if (typeof attachment.name !== 'string') this.report(__line);
           if (typeof attachment.size !== 'number') this.report(__line);
           if (typeof attachment.url !== 'string') this.report(__line);
-          if (typeof attachment.proxy_url !== 'string') this.report(__line);
+          if (typeof attachment.proxyURL !== 'string') this.report(__line);
           if (attachment.width && typeof attachment.width !== 'number') this.report(__line);
           if (attachment.height && typeof attachment.height !== 'number') this.report(__line);
         }
