@@ -7,7 +7,7 @@ const url = require('url');
 const twemoji = require('twemoji');
 const hljs = require('highlight.js');
 const SimpleMarkdown = require('simple-markdown');
-// eslint-disable-next-line node/no-deprecated-api
+// // eslint-disable-next-line node/no-deprecated-api
 const punycode = require('punycode'); // this is from npm but eslint dumb
 
 class Markdown {
@@ -101,7 +101,7 @@ class Markdown {
 			u: SimpleMarkdown.defaultRules.u,
 			text: {
 				...SimpleMarkdown.defaultRules.text,
-				html: node => SimpleMarkdown.sanitizeText(node.content).replace(/(^ +)|( +$)/g, '&nbsp;')
+				html: node => SimpleMarkdown.sanitizeText(node.content).replace(/(^ +)|( +$)/g, '&nbsp;').replace(/\n/g, '<br>')
 			},
 			inlineCode: SimpleMarkdown.defaultRules.inlineCode,
 			codeBlock: {
@@ -119,9 +119,8 @@ class Markdown {
 							const res = hljs.highlight(node.lang, node.content);
 							code = res.value;
 							lang = res.language;
-						} catch (e) {
-							console.warn(e);
-						}
+						// eslint-disable-next-line no-empty
+						} catch (e) {}
 					}
 					if (!code) {
 						code = output({

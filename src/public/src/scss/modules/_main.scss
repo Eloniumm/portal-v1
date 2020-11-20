@@ -4,14 +4,13 @@
  */
 
 .theme-dark {
-	--brand: #7289DA;
 	--background: #36393f;
 	--background-dark: #2f3136;
 	--background-very-dark: #202225;
 	--background-extreme-dark: #18191c;
 	--background-hover: rgba(4, 4, 5, 0.07);
 	--background-context-hover: rgba(79, 84, 92, .16);
-	--scrollbar-background: #2E3338;
+	--background-accent: #4f545c;
 	--color: #fff;
 	--color-light-gray: #b9bbbe;
 	--color-gray: #72767d;
@@ -27,13 +26,13 @@
 }
 
 .theme-light {
-	--brand: #7289DA;
 	--background: #fff;
 	--background-dark: #f2f3f5;
 	--background-very-dark: #e3e5e8;
 	--background-extreme-dark: #fff;
 	--background-hover: rgba(6, 6, 7, 0.02);
 	--background-context-hover: rgba(116, 127, 141, .08);
+	--background-accent: #747f8d;
 	--color: #2e3338;
 	--color-light-gray: #4f5660;
 	--color-gray: #747f8d;
@@ -88,7 +87,7 @@ html {
 }
 
 ::-webkit-scrollbar {
-	background-color: var(--scrollbar-background);
+	background-color: transparent;
 	width: 8px;
 }
 
@@ -98,9 +97,3 @@ html {
 	border-left-width: 1px;
 	border-right-width: 1px;
 }
-
-// ::selection,
-// ::-moz-selection {
-// 	color: white;
-// 	background: --brand !important;
-// }

@@ -11,7 +11,8 @@
 	"scripts": {
 		"start": "node ./bin/www",
 		"build": "esbuild src/public/src/index.js --outfile=src/public/dist/js/index.js --minify --bundle",
-		"sass": "sass src/public/src/scss/:src/public/dist/css --watch --style=compressed --no-source-map"
+		"sass": "sass src/public/src/scss/:src/public/dist/css --style=compressed --no-source-map && node dl-font.js",
+		"watch-sass": "sass src/public/src/scss/:src/public/dist/css --watch --style=compressed --no-source-map && node dl-font.js"
 	},
 	"dependencies": {
 		"dotenv": "^8.2.0",
