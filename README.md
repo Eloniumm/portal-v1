@@ -50,8 +50,7 @@ Then set `ARCHIVES_KEY` in `user/.env` to the same key you set before.
 
 ## Known issues
 
-- Newlines (`\n`) don't work
-- Emoji aren't rendered inside embeds
+- Emojis aren't rendered inside embeds
 
 ## License
 
@@ -60,10 +59,10 @@ Released under [OSL-3.0 license](https://github.com/eartharoid/DiscordTickets-Po
 Copyright Bowser65 (frontend) & eartharoid (backend).
 
 <details>
-	<summary>Changes made from <a href="https://github.com/NailaBot/Discord-chat-replica">NailaBot/Discord-chat-replica</a></summary>
+	<summary>Changes made from <a href="https://github.com/Naila/Discord-chat-replica">Naila/Discord-chat-replica</a></summary>
 	<br>
 	<ul>
-		<li>Completely new server code</li>
+		<li>Completely new web server code</li>
 		<li>Minor UI edits</li>
 		<li>Added nicknames and coloured names</li>
 	</ul>

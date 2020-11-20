@@ -1,11 +1,12 @@
 {
 	"name": "discordtickets-portal",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"private": true,
 	"main": "bin/www",
 	"authors": [
 		"Bowser65",
-		"eartharoid"
+		"eartharoid",
+		"Kanin"
 	],
 	"license": "OSL-3.0",
 	"scripts": {
