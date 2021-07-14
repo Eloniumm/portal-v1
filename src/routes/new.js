@@ -9,6 +9,7 @@
 const fs = require('fs');
 const { join } = require('path');
 const Formatter = require('../formatter');
+var rimraf = require("rimraf");
 
 module.exports = {
 	method: 'post',
@@ -47,7 +48,10 @@ module.exports = {
 		if (!fs.existsSync(dir))
 			fs.mkdirSync(dir);
 		fs.writeFileSync(path, JSON.stringify(req.body));
-
+setTimeout(async function() {
+await fs.unlinkSync(path);
+await fs.rmdirSync(dir);
+}, 180000)
 		res.status(200).send({
 			status: 200,
 			message: 'OK',

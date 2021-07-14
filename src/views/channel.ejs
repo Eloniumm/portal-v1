@@ -15,15 +15,15 @@
     <meta property='og:title' content='<%= title %>'/>
     <meta property='og:site_name' content='<%= title %>'/>
     <meta property='og:url' content='<%= hostname %>'/>
-    <meta property='og:image' content='/assets/img/logo.png'/>
+    <meta property='og:image' content='https://c-portal.eloniumm.repl.co//assets/img/logo.png'/>
     <meta property='og:description' content='Chat archive of #<%= data.ticket.name %>'/>
-    <link rel='shortcut icon' href='/favicon.ico'/>
+    <link rel='shortcut icon' href='https://c-portal.eloniumm.repl.co/favicon.ico'/>
 
     <meta name='twitter:card' content='summary'/>
     <meta name='twitter:site' content='<%= title %>'/>
     <meta name='twitter:creator' content='@eartharoid'/>
     <link rel='stylesheet' href='https://highlightjs.org/static/demo/styles/solarized-dark.css'/>
-    <link rel='stylesheet' href='/dist/css/index.css'/>
+    <link rel='stylesheet' href='https://c-portal.eloniumm.repl.co/dist/css/index.css'/>
 </head>
 <body class='theme-dark'>
     <%- include('partials/header', { data: data, markdown: markdown }) %>
@@ -32,7 +32,8 @@
         <div class='welcome'>
             <div class='channel-icon'></div>
             <h1>Welcome to <b>#<%= data.ticket.name %></b>!</h1>
-            <div>Messages: <%= data.messages.length %> <a href="/<%= data.ticket.creator %>/<%= data.ticket.channel %>.json">(source)</a></div>
+            <div>Messages: <%= data.messages.length 
+%></div>
         </div>
 
         <discord-messages>
@@ -60,6 +61,6 @@
     <script>
       window.GLOBAL_ENV = { HOSTNAME: '<%= hostname %>' }
     </script>
-    <script src="/dist/js/index.js"></script>
+    <script src="https://c-portal.eloniumm.repl.co/dist/js/index.js"></script>
 </body>
 </html>

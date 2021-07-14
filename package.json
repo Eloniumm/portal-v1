@@ -24,6 +24,7 @@
 		"leekslazylogger-express": "^0.0.8",
 		"mime-types": "^2.1.27",
 		"punycode": "^2.1.1",
+		"rimraf": "^3.0.2",
 		"simple-markdown": "^0.7.2",
 		"twemoji": "^13.0.0"
 	},

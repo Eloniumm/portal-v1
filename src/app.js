@@ -54,32 +54,6 @@ app.use((req, res) => {
 // 	res.render('error');
 // });
 
-if (process.env.KEEP_FOR) {
-	const one_hour = 1000 * 60 * 60;
-	const clearTemp = () => {
-		let deleted = 0;
-		log.info('Scanning for old archives');
-		fs.readdirSync('user/archives/users/', { withFileTypes: true })
-			.filter(dir => dir.isDirectory())
-			.map(dir => dir.name).forEach(user => {
-				const channels = fs.readdirSync('user/archives/users/' + user);
-				let today = new Date();
 
-				for (const file of channels) { 
-					let path = `user/archives/users/${user}/${file}`;
-					let lastMod = new Date(fs.statSync(path).mtime);
-					let max = one_hour * 24 * process.env.KEEP_FOR;
-					if (Math.floor((today - lastMod) / max) > 1) {
-						fs.unlinkSync(path);
-						log.console(`Removed ${file}`);
-						deleted++;
-					}
-				}
-				log.info(`Removed ${deleted} old archives`);
-			});
-	};
-	clearTemp();
-	setInterval(clearTemp, one_hour * 24);
-}
 
 module.exports = app;
