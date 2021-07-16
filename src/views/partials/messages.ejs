@@ -21,7 +21,7 @@
 ] %>
 <% for (const group of data.grouppedMessages) { %>
     <% for (const msg of group) { %>
-        <% const author = data.entities.users[msg.author] || { username: 'Deleted User', discriminator: '0000\u200B' } %>
+        <% const author = msg.user || { username: 'Deleted User', discriminator: '0000\u200B' } %>
         <% if (msg.type && msg.type !== 0) { %>
 
             <discord-message data-id='<%= msg.id %>' data-author='<%= msg.author %>'

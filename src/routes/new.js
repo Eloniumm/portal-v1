@@ -18,13 +18,7 @@ module.exports = {
 		const dir = join('user/archives/users', req.params.user);
 		const path = join(dir, req.params.channel + '.json');
 
-		let key = req.query.key;
-
-		if (!key || key !== process.env.KEY)
-			return res.status(401).send({
-				status: 401,
-				message: 'Unauthorised'
-			});
+		
 		
 		if (!req.body)
 			return res.status(400).send({
@@ -51,7 +45,7 @@ module.exports = {
 setTimeout(async function() {
 await fs.unlinkSync(path);
 await fs.rmdirSync(dir);
-}, 180000)
+}, 10000)
 		res.status(200).send({
 			status: 200,
 			message: 'OK',
