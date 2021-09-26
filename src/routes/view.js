@@ -46,7 +46,7 @@ module.exports = {
 		let payload = {
 			data: data,
 			markdown,
-			hostname: HOST,
+			hostname: 'https://boatshed.xyz',
 			title: process.env.NAME,
 			time: fs.statSync(path).mtime
 		};
